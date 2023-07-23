@@ -1,0 +1,18 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+    id: 'Create release'
+    entrypoint: gcloud
+    args:
+      [
+        'deploy', 'releases', 'create', 'r-${SHORT_SHA}-$$DATE$$TIME',
+        '--delivery-pipeline', '$_DELIVERY_PIPELINE_NAME',
+        '--region', '$_REGION',
+        #'--build-artifacts', '/workspace/artifacts.json',
+        # As of 2023-05-19, Cloud Deploy must use the Skaffold preview version
+        # as the latest supported LTS (2.3.x) does not work with canary
+        # deployment strategies.
+        '--skaffold-version', 'skaffold_preview'
+      ]
+
+options:
+  logging: CLOUD_LOGGING_ONLY

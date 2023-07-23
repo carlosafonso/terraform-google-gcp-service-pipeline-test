@@ -1,0 +1,17 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: terraform-google-gcp-service-pipeline-test
+profiles:
+- name: qa
+  manifests:
+    rawYaml:
+      - knative-service-qa.yaml
+  deploy:
+    cloudrun: {}
+- name: prod
+  manifests:
+    rawYaml:
+      - knative-service-prod.yaml
+  deploy:
+    cloudrun: {}
